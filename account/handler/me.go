@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/LuckyRunner/memrizr/model"
-	"github.com/LuckyRunner/memrizr/model/apperrors.go"
+	"github.com/LuckyRunner/memrizr/model/apperrors"
 	"github.com/gin-gonic/gin"
 )
 

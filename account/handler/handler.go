@@ -17,7 +17,7 @@ type Handler struct {
 // handler layer on handler initialization
 type Config struct {
 	R           *gin.Engine
-	UserService *model.UserService
+	UserService model.UserService
 }
 
 // NewHandler initializes the handler with required injected services along with http routes

@@ -1,4 +1,4 @@
-module github.com/LuckyRunner/memrizr
+module github.com/LuckyRunner/memrizr/account
 
 go 1.22.2
 

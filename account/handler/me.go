@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/LuckyRunner/memrizr/model"
-	"github.com/LuckyRunner/memrizr/model/apperrors"
+	"github.com/LuckyRunner/memrizr/account/model"
+	"github.com/LuckyRunner/memrizr/account/model/apperrors"
 	"github.com/gin-gonic/gin"
 )
 

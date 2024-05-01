@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/LuckyRunner/memrizr/model"
+	"github.com/LuckyRunner/memrizr/account/model"
 	"github.com/gin-gonic/gin"
 )
 

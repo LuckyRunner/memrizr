@@ -2,6 +2,7 @@ package handler
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/LuckyRunner/memrizr/account/model"
 	"github.com/LuckyRunner/memrizr/account/model/apperrors"
@@ -30,15 +31,33 @@ func (h *Handler) Signup(c *gin.Context) {
 		Password: req.Password,
 	}
 
-	err := h.UserService.Signup(c, u)
+	ctx := c.Request.Context()
+	err := h.UserService.Signup(ctx, u)
+
 	if err != nil {
 		log.Printf("Failed to sign up user: %v", err.Error())
 		c.JSON(apperrors.Status(err), gin.H{
 			"error": err,
 		})
-	}
-	// Bind incoming json body to struct and check for validation errors
-	if ok := bindData(c, &req); !ok {
 		return
 	}
+
+	tokens, err := h.TokenService.NewPairFromUser(ctx, u, "")
+
+	if err != nil {
+		log.Printf("Failed to create tokens for user: %v\n", err.Error())
+
+		// may enventually implement rollback logic here
+		// meaning, if we fail to create tokens after creating a user,
+		// we make sure to clear/delete the created user in the databse
+
+		c.JSON(apperrors.Status(err), gin.H{
+			"error": err,
+		})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{
+		"tokens": tokens,
+	})
 }

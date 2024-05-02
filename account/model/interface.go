@@ -13,6 +13,12 @@ type UserService interface {
 	Signup(ctx context.Context, u *User) error
 }
 
+// TokenService defiens methods the handler layer expects to interact
+// with in regards to producting JWTs as string
+type TokenService interface {
+	NewPairFromUser(ctx context.Context, u *User, prevTokenID string) (*TokenPair, error)
+}
+
 // UserRepository defines methods the service layer expects
 // any repository it intects with to implement
 type UserRepository interface {

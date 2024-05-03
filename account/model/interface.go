@@ -23,4 +23,5 @@ type TokenService interface {
 // any repository it intects with to implement
 type UserRepository interface {
 	FindByID(ctx context.Context, id uuid.UUID) (*User, error)
+	Create(ctx context.Context, u *User) error
 }

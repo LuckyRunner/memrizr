@@ -21,8 +21,9 @@ func (h *Handler) Me(c *gin.Context) {
 	}
 
 	uid := user.(*model.User).UID
+	ctx := c.Request.Context()
 
-	u, err := h.UserService.Get(c, uid)
+	u, err := h.UserService.Get(ctx, uid)
 	if err != nil {
 		log.Printf("Unable to find user: %v\n%v", uid, err)
 		e := apperrors.NewNotFound("user", uid.String())

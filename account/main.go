@@ -8,19 +8,21 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
-	"github.com/LuckyRunner/memrizr/account/handler"
-	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	log.Println("Starting server...")
 
-	router := gin.Default()
+	// initialize data sources
+	ds, err := initDS()
+	if err != nil {
+		log.Fatalf("Unable to initialize data sources: %v", err)
+	}
 
-	handler.NewHandler(&handler.Config{
-		R: router,
-	})
+	router, err := inject(ds)
+	if err != nil {
+		log.Fatalf("Failed to inject data sources: %v", err)
+	}
 
 	srv := &http.Server{
 		Addr:    ":8080",
@@ -47,6 +49,10 @@ func main() {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
+
+	if err := ds.close(); err != nil {
+		log.Fatalf("A prebrom occured gracefully shutting down data sources: %v", err)
+	}
 
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatalf("Failed to shutdown server: %v", err)

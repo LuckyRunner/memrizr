@@ -22,7 +22,7 @@ func TestSignup(t *testing.T) {
 	t.Run("Email and Password Required", func(t *testing.T) {
 		// We just want this to show that it's not called in this case
 		mockUserService := new(mocks.MockUserService)
-		mockUserService.On("Signup", mock.AnythingOfType("*gin.Context"), mock.AnythingOfType("*model.User")).Return(nil)
+		mockUserService.On("Signup", mock.AnythingOfType("backgroundCtx"), mock.AnythingOfType("*model.User")).Return(nil)
 
 		// a response recorder for getting written http response
 		rr := httptest.NewRecorder()
@@ -56,7 +56,7 @@ func TestSignup(t *testing.T) {
 	t.Run("Invalid email", func(t *testing.T) {
 		// We just want this to show that it's not called in this case
 		mockUserService := new(mocks.MockUserService)
-		mockUserService.On("Signup", mock.AnythingOfType("*gin.Context"), mock.AnythingOfType("*model.User")).Return(nil)
+		mockUserService.On("Signup", mock.AnythingOfType("backgroundCtx"), mock.AnythingOfType("*model.User")).Return(nil)
 
 		// a response recorder for getting written http response
 		rr := httptest.NewRecorder()
@@ -91,7 +91,7 @@ func TestSignup(t *testing.T) {
 	t.Run("Password too short", func(t *testing.T) {
 		// We just want this to show that it's not called in this case
 		mockUserService := new(mocks.MockUserService)
-		mockUserService.On("Signup", mock.AnythingOfType("*gin.Context"), mock.AnythingOfType("*model.User")).Return(nil)
+		mockUserService.On("Signup", mock.AnythingOfType("backgroundCtx"), mock.AnythingOfType("*model.User")).Return(nil)
 
 		// a response recorder for getting written http response
 		rr := httptest.NewRecorder()
@@ -126,7 +126,7 @@ func TestSignup(t *testing.T) {
 	t.Run("Password too lang", func(t *testing.T) {
 		// We just want this to show that it's not called in this case
 		mockUserService := new(mocks.MockUserService)
-		mockUserService.On("Signup", mock.AnythingOfType("*gin.Context"), mock.AnythingOfType("*model.User")).Return(nil)
+		mockUserService.On("Signup", mock.AnythingOfType("backgroundCtx"), mock.AnythingOfType("*model.User")).Return(nil)
 
 		// a response recorder for getting written http response
 		rr := httptest.NewRecorder()

@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/LuckyRunner/memrizr/account/model"
 	"github.com/gin-gonic/gin"
@@ -20,6 +19,7 @@ type Config struct {
 	R            *gin.Engine
 	UserService  model.UserService
 	TokenService model.TokenService
+	BaseURL      string
 }
 
 // NewHandler initializes the handler with required injected services along with http routes
@@ -32,16 +32,16 @@ func NewHandler(c *Config) {
 	} // currently has no properties
 
 	// Create an account group
-	g := c.R.Group(os.Getenv("ACCOUNT_API_URL"))
+	g := c.R.Group(c.BaseURL)
 
 	g.GET("/me", h.Me)
-	g.POST("signup", h.Signup)
-	g.POST("signin", h.Signin)
-	g.POST("signout", h.Signout)
-	g.POST("tokens", h.Tokens)
-	g.POST("image", h.Image)
-	g.DELETE("image", h.DeleteImage)
-	g.PUT("details", h.Details)
+	g.POST("/signup", h.Signup)
+	g.POST("/signin", h.Signin)
+	g.POST("/signout", h.Signout)
+	g.POST("/tokens", h.Tokens)
+	g.POST("/image", h.Image)
+	g.DELETE("/image", h.DeleteImage)
+	g.PUT("/details", h.Details)
 }
 
 func (h *Handler) Signin(c *gin.Context) {

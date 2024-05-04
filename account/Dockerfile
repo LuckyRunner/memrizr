@@ -4,7 +4,7 @@ WORKDIR /go/src/app
 
 ENV GO111MODULE=on
 
-RUN go install github.com/cespare/reflex@latest
+RUN go get github.com/cespare/reflex
 
 COPY go.mod .
 COPY go.sum .

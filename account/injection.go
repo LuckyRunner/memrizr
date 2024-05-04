@@ -27,7 +27,7 @@ func inject(d *dataSources) (*gin.Engine, error) {
 	userRepository := repository.NewUserRepository(d.DB)
 
 	/*
-	 * service layer
+	 * repository layer
 	 */
 	userService := service.NewUserService(&service.USConfig{
 		UserRepository: userRepository,

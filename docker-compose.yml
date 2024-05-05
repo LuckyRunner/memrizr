@@ -25,18 +25,24 @@ services:
     volumes:
       - "pgdata_account:/var/lib/postgresql/data"
     command: ["postgres", "-c", "log_statement=all"]
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   restart: always
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@example.com
-  #     PGADMIN_DEFAULT_PASSWORD: admin
-  #   ports:
-  #     - '5050:80'
-  #   volumes:
-  #     - pgadmin:/var/lib/pgadmin
-  #   links:
-  #     - postgres-account:postgres
+  redis-account:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "redisdata:/data"
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - '5050:80'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    links:
+      - postgres-account:postgres
   account:
     build:
       context: ./account
@@ -55,7 +61,9 @@ services:
     # have to use $$ (double-dollar) so docker doesn't try to substitute a variable
     depends_on:
       - postgres-account
+      - redis-account
     command: reflex -r "\.go$$" -s -- sh -c "go run ./"
 volumes:
   pgdata_account:
-  # pgadmin:
+  redisdata:
+  pgadmin:
